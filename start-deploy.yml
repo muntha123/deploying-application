@@ -1,78 +1,32 @@
 resource_types:
-- name: artifactory
+- name: muntha123
   type: docker-image
   source:
-    repository: pivotalservices/artifactory-resource
+    repository: nulldriver/cf-cli-resource
 resources:    
-- name: conversion-git-repo
+- name: deploying-application
   type: git
   source:
-    uri: https://pepsicoit.visualstudio.com/LOTO/_git/pepsico-loto-document-conversion
-    username: ((VSTS_USERNAME))
-    password: ((VSTS_PASSWORD))
+    uri: https://github.com/muntha123/deploying-application.git
+    #username: ((VSTS_USERNAME))
+    #password: ((VSTS_PASSWORD))
     branch: master
+
 jobs:
-- name: build_dev
+- name: deploy
   serial: true
   plan:
-  - get: conversion-git-repo
+  - get: deploying-application
     trigger: true
-  - task: build_dev
-    file: conversion-git-repo/ci/build.yml
+  - task: deploy
+    file: deploying-application/ci/build.yml
     params:
-         artifactory_userid: ((artifactory_username))
-         artifactory_pass: ((artifactory_password))
-         artifactory_path: ((artifactory_url))
-         environment: dev
-         
-- name: unit_testing
-  serial: true
-  plan: 
-    - get: conversion-git-repo
-      passed: 
-        - build_dev
-      trigger: true
-    - task: conversion_unit_test
-      file: conversion-git-repo/ci/unittest.yml
-- name: sonar_analysis
-  public: true
-  plan:
-    - get: conversion-git-repo
-      passed: 
-       - unit_testing
-      trigger: true
-    - task: code-scan_testing
-      file: conversion-git-repo/ci/sonarscan.yml
-- name: fortify-scan
-  public: true
-  plan:
-     - get: conversion-git-repo
-       passed:
-       - unit_testing
-       trigger: true
-     - task: code-scan_testing
-       file: conversion-git-repo/ci/scan.yml
-       params:
-         artifactory_username: ((artifactory_username))
-         artifactory_password: ((artifactory_password))
-         artifactory_url: ((artifactory_url))
-         environment: dev
-         
- 
-- name: deploy-jar-to-Artifactory
-  public: true
-  plan:
-   - get: conversion-git-repo
-     passed:
-      - fortify-scan
-      - sonar_analysis
-     trigger: true
-   - task: copy-jar-file
-     file: conversion-git-repo/ci/copyfile.yml
-     params:
-       artifactory_username: ((artifactory_username))
-       artifactory_password: ((artifactory_password))
-       artifactory_url: ((artifactory_url))
-       environment: dev
-       
-########################################################
+         #artifactory_userid: ((artifactory_username))
+         #artifactory_pass: ((artifactory_password))
+         #artifactory_path: ((artifactory_url))
+         #environment: dev
+         API_ENDPOINT: ((cf-api))
+         USERNAME: ((concourse-automation-client-id))
+         PASSWORD: ((concourse-automation-client-secret))
+         ORG: ((cf-org))
+         SPACE: ((cf-space))
