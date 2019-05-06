@@ -1,0 +1,25 @@
+#vsts_url: https://github.com/kishorepkr/pcflab.git #VSTS Pipeline
+#vsts_branch: master
+#vsts_username: ((vsts_username)) # [R] Your github username
+#vsts_token: ((vsts_token)) # your vsts token for the service account
+#concourse-automation-client-id: ((concourse-automation-client-id)) # cf-cli creds
+#concourse-automation-client-secret: ((concourse-automation-client-secret)) # cf-cli creds
+concourse-automation-client-id: admin # cf-cli creds
+concourse-automation-client-secret: RGu2PvPVBWzik8krDOP9jah3boAXYq-h # cf-cli creds
+# primary sc site, start applications settings 
+cf-org: test-org
+cf-space: dev
+cf-api: api.sys.testpcf.pcflabcog.com
+
+
+
+
+
+
+
+
+
+
+
+
+
