@@ -1,0 +1,25 @@
+---
+platform: linux
+
+image_resource:
+type: docker-image
+source: 
+   repository: nulldriver/cf-cli-resource
+   #insecure_registries: ["artifactory.pepsico.pvt"]
+   #tag: 'latest'
+
+params:
+  API_ENDPOINT: 
+  USERNAME: 
+  PASSWORD: 
+  ORG: 
+  SPACE:
+
+inputs:
+- name: deploying-application
+
+#outputs:
+#- name: build_folder
+
+run:
+path: deploying-application/ci/build.sh
