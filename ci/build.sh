@@ -15,9 +15,9 @@ echo "Target Org and Space"
 org_space="cf target -o $ORG -s $SPACE"
 eval $org_space
 
-cd deploying-application/application/
+cd deploying-application/
 
-cf push APPNAME -p ./applicatin.war -i 1
+cf push springmusic -p ./spring-music.war -i 1
 
 
 
